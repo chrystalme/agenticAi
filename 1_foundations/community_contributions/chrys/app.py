@@ -9,7 +9,7 @@ import gradio as gr
 
 load_dotenv(override=True)
 open_router_api_key = os.getenv("OPENROUTER_API_KEY")
-open_router_url = "https://openrouter.ai/api/v1/chat/completions"
+open_router_url = "https://openrouter.ai/api/v1"
 
 def push(text):
     requests.post(
@@ -83,13 +83,13 @@ class Me:
             base_url=open_router_url
         )
         self.name = "Mr Malieze Afam Ifeanyi - Chrys"
-        reader = PdfReader("me/Resume2025.pdf")
+        reader = PdfReader("Resume2025.pdf")
         self.linkedin = ""
         for page in reader.pages:
             text = page.extract_text()
             if text:
                 self.linkedin += text
-        with open("me/chrys_summary.txt", "r", encoding="utf-8") as f:
+        with open("chrys_summary.txt", "r", encoding="utf-8") as f:
             self.summary = f.read()
 
 
@@ -135,5 +135,5 @@ If the user is engaging in discussion, try to steer them towards getting in touc
 
 if __name__ == "__main__":
     me = Me()
-    gr.ChatInterface(me.chat, type="messages").launch()
+    gr.ChatInterface(me.chat, type="messages").launch(share=True)
     
