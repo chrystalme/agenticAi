@@ -8,6 +8,8 @@ import gradio as gr
 
 
 load_dotenv(override=True)
+open_router_api_key = os.getenv("OPENROUTER_API_KEY")
+open_router_url = "https://openrouter.ai/api/v1/chat/completions"
 
 def push(text):
     requests.post(
@@ -76,15 +78,18 @@ tools = [{"type": "function", "function": record_user_details_json},
 class Me:
 
     def __init__(self):
-        self.openai = OpenAI()
-        self.name = "Ed Donner"
-        reader = PdfReader("me/linkedin.pdf")
+        self.openai = OpenAI(
+            api_key=open_router_api_key,
+            base_url=open_router_url
+        )
+        self.name = "Mr Malieze Afam Ifeanyi - Chrys"
+        reader = PdfReader("me/Resume2025.pdf")
         self.linkedin = ""
         for page in reader.pages:
             text = page.extract_text()
             if text:
                 self.linkedin += text
-        with open("me/summary.txt", "r", encoding="utf-8") as f:
+        with open("me/chrys_summary.txt", "r", encoding="utf-8") as f:
             self.summary = f.read()
 
 
